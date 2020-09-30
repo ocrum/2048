@@ -10,8 +10,8 @@ class Board:
     # prints every row
     def display(self):
         for i in self.board:
-            print i
-        print
+            print(i)
+        print()
 
     # adds a 2 2's to empty squares
     def add_squares(self):
