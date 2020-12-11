@@ -1,17 +1,30 @@
-# from Board import Board
+from Board import Board
 import tkinter as tk
 
 
-# game_board = Board(4)
+# TODO Make something display on the tkinter window
+def display_array(arr):
+    return arr
+
+
 root = tk.Tk()
+root.geometry('400x400')
+root.title("2048 Game")
 
-# creating a label widget
-myLabel1 = tk.Label(root, text="Hello World!")
-myLabel2 = tk.Label(root, text="My name is pee pee poopie!")
+C = tk.Canvas(root, width=300, height=300, highlightthickness=5, highlightbackground="black")
+C.grid(row=0, column=0)
+C.create_rectangle(50, 0, 100, 50, fill='red')
 
-# shoving it into the window
-myLabel1.grid(row=0, column=0)
-myLabel2.grid(row=1, column=1)
+game_board = Board(4)
+
+for i in range(600):
+    game_board.add_squares()
+    game_board.shift_board_down()
+    game_board.shift_board_left()
+    game_board.shift_board_up()
+    game_board.shift_board_right()
+    game_board.print()
+    display_array(game_board.board)
 
 # this is the loop
 root.mainloop()

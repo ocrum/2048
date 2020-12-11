@@ -8,7 +8,7 @@ class Board:
         self.board = [[self.empty_symbol for i in range(size)] for j in range(size)]
 
     # prints every row
-    def display(self):
+    def print(self):
         for i in self.board:
             print(i)
         print()
@@ -148,10 +148,10 @@ class Board:
 
 game_board = Board(4)
 
-for i in range(600):
-    game_board.add_squares()
-    game_board.shift_board_down()
-    game_board.shift_board_left()
-    game_board.shift_board_up()
-    game_board.shift_board_right()
-    game_board.display()
+# for i in range(600):
+#     game_board.add_squares()
+#     game_board.shift_board_down()
+#     game_board.shift_board_left()
+#     game_board.shift_board_up()
+#     game_board.shift_board_right()
+#     game_board.print()
