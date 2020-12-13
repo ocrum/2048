@@ -147,21 +147,36 @@ class Board:
                             break
 
 
+def key_handler(event):
+    if event.keysym == 'Up':
+        game_board.shift_board_up()
+    elif event.keysym == 'Down':
+        game_board.shift_board_down()
+    elif event.keysym == 'Left':
+        game_board.shift_board_left()
+    elif event.keysym == 'Right':
+        game_board.shift_board_right()
+    else:
+        print('Useless Key: ', event.keysym)
+        return
+    game_board.add_squares()
+    for i in range(4):
+        for j in range(4):
+            tkinter_board[i][j].config(text=game_board.board[i][j])
+
+
 root = Tk()
 root.title('2048')
+root.bind('<Key>', key_handler)
 game_board = Board(4)
-
-for i in range(600):
-    game_board.add_squares()
-    game_board.shift_board_down()
-    game_board.shift_board_left()
-    game_board.shift_board_up()
-    game_board.shift_board_right()
-    game_board.print()
+tkinter_board = []
 
 for i in range(4):
+    rows = []
     for j in range(4):
         tile = Label(root, text=game_board.board[i][j])
         tile.grid(row=i, column=j)
+        rows.append(tile)
+    tkinter_board.append(rows)
 
 root.mainloop()
