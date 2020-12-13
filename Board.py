@@ -1,10 +1,11 @@
+from tkinter import Tk, Label
 import random
 
 
 class Board:
     # creates a board that is n x n size
     def __init__(self, size):
-        self.empty_symbol = 0
+        self.empty_symbol = ''
         self.board = [[self.empty_symbol for i in range(size)] for j in range(size)]
 
     # prints every row
@@ -146,12 +147,21 @@ class Board:
                             break
 
 
+root = Tk()
+root.title('2048')
 game_board = Board(4)
 
-# for i in range(600):
-#     game_board.add_squares()
-#     game_board.shift_board_down()
-#     game_board.shift_board_left()
-#     game_board.shift_board_up()
-#     game_board.shift_board_right()
-#     game_board.print()
+for i in range(600):
+    game_board.add_squares()
+    game_board.shift_board_down()
+    game_board.shift_board_left()
+    game_board.shift_board_up()
+    game_board.shift_board_right()
+    game_board.print()
+
+for i in range(4):
+    for j in range(4):
+        tile = Label(root, text=game_board.board[i][j])
+        tile.grid(row=i, column=j)
+
+root.mainloop()
