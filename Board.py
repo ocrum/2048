@@ -2,11 +2,13 @@ from tkinter import Tk, Label
 import random
 
 
+# This is a matrix of the board that stores all the information in the simplest form meaning no GUI stuff
 class Board:
     # creates a board that is n x n size
     def __init__(self, size):
         self.empty_symbol = ''
         self.board = [[self.empty_symbol for _ in range(size)] for _ in range(size)]
+        self.score = 0
 
     # prints every row
     def print(self):
@@ -14,7 +16,7 @@ class Board:
             print(i)
         print()
 
-    # adds a 2 2's to empty squares
+    # adds a 2 or a 4 to two empty squares
     def add_squares(self):
         # list with all empty coordinates left
         empty_cords = []
@@ -74,6 +76,8 @@ class Board:
                             # then add them together
                             self.board[r][c + offset + 1] += self.board[r][c + offset]
                             self.board[r][c + offset] = self.empty_symbol
+                            # add the score
+                            self.score += self.board[r][c + offset + 1]
                         else:
                             # then check the next row
                             break
@@ -101,6 +105,8 @@ class Board:
                             # then add them together
                             self.board[r][c - offset - 1] += self.board[r][c - offset]
                             self.board[r][c - offset] = self.empty_symbol
+                            # add the score
+                            self.score += self.board[r][c - offset - 1]
                         else:
                             # then check the next row
                             break
@@ -127,6 +133,8 @@ class Board:
                             # then add them together
                             self.board[r - offset - 1][c] += self.board[r - offset][c]
                             self.board[r - offset][c] = self.empty_symbol
+                            # add the score
+                            self.score += self.board[r - offset - 1][c]
                         else:
                             # then check the next row
                             break
@@ -153,11 +161,14 @@ class Board:
                             # then add them together
                             self.board[r + offset + 1][c] += self.board[r + offset][c]
                             self.board[r + offset][c] = self.empty_symbol
+                            # add the score
+                            self.score += self.board[r + offset + 1][c]
                         else:
                             # then check the next row
                             break
 
 
+# take in a key event and then does certain action based on that
 def key_handler(event):
     if event.keysym == 'Up':
         game_board.shift_board_up()
@@ -168,25 +179,39 @@ def key_handler(event):
     elif event.keysym == 'Right':
         game_board.shift_board_right()
     else:
+        # if it is not a used key it will print something in the console
         print('Useless Key: ', event.keysym)
         return
+    # add the scores
     game_board.add_squares()
+
+    # update the GUI board
+    score.config(text="Score: " + str(game_board.score))
     for i in range(4):
         for j in range(4):
             tkinter_board[i][j].config(text=game_board.board[i][j])
 
 
+# basic Tkinter set up
 root = Tk()
 root.title('2048')
 root.bind('<Key>', key_handler)
 game_board = Board(4)
+# holds all of the Tkinter widgets
 tkinter_board = []
+# add squares when the game starts
+game_board.add_squares()
 
+# add the score label
+score = Label(root, text="Score: " + str(game_board.score))
+score.grid(row=0, column=0, columnspan=4)
+
+# creates all of the widgets and puts them into the tkinter_board matrix
 for i in range(4):
     rows = []
     for j in range(4):
-        tile = Label(root, text=game_board.board[i][j])
-        tile.grid(row=i, column=j)
+        tile = Label(root, text=game_board.board[i][j], height=2, width=4, borderwidth=5, relief="groove")
+        tile.grid(row=i+1, column=j)
         rows.append(tile)
     tkinter_board.append(rows)
 
