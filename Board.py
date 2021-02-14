@@ -6,7 +6,7 @@ import random
 class Board:
     # creates a board that is n x n size
     def __init__(self, size):
-        self.empty_symbol = ''
+        self.empty_symbol = 0
         self.board = [[self.empty_symbol for _ in range(size)] for _ in range(size)]
         self.score = 0
 
@@ -53,6 +53,13 @@ class Board:
             empty_cords[rand_index1] = empty_cords[-1]
             rand_index2 = int(random.uniform(0, len(empty_cords) - 1))
             self.board[empty_cords[rand_index2][0]][empty_cords[rand_index2][1]] = random_num2
+
+    # create a preset
+    def preset(self):
+        self.board[0][0] = 8
+        self.board[1][0] = 4
+        self.board[2][0] = 2
+        self.board[3][0] = 2
 
     def shift_board_right(self):
         # for every column except for the right most one and going leftwards
@@ -189,7 +196,10 @@ def key_handler(event):
     score.config(text="Score: " + str(game_board.score))
     for i in range(4):
         for j in range(4):
-            tkinter_board[i][j].config(text=game_board.board[i][j])
+            if game_board.board[i][j] == 0:
+                tkinter_board[i][j].config(text='')
+            else:
+                tkinter_board[i][j].config(text=game_board.board[i][j])
 
 
 # basic Tkinter set up
@@ -201,6 +211,7 @@ game_board = Board(4)
 tkinter_board = []
 # add squares when the game starts
 game_board.add_squares()
+game_board.preset()
 
 # add the score label
 score = Label(root, text="Score: " + str(game_board.score))
@@ -210,8 +221,9 @@ score.grid(row=0, column=0, columnspan=4)
 for i in range(4):
     rows = []
     for j in range(4):
-        tile = Label(root, text=game_board.board[i][j], height=2, width=4, borderwidth=5, relief="groove")
-        tile.grid(row=i+1, column=j)
+        tile = Label(root, text='' if game_board.board[i][j] == 0 else game_board.board[i][j]
+                     , height=2, width=4, borderwidth=5, relief="groove")
+        tile.grid(row=i + 1, column=j)
         rows.append(tile)
     tkinter_board.append(rows)
 
