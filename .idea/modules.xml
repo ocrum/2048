@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/2048.iml" filepath="$PROJECT_DIR$/.idea/2048.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Pong/.idea/Pong.iml" filepath="$PROJECT_DIR$/../Pong/.idea/Pong.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tkinterPractice/.idea/tkinterPractice.iml" filepath="$PROJECT_DIR$/../tkinterPractice/.idea/tkinterPractice.iml" />
     </modules>
   </component>
 </project>
